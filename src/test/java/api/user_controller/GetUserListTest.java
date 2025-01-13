@@ -38,7 +38,7 @@ public class GetUserListTest extends BaseTest {
 
         System.out.println("--- Response Body: " + response.getBody().asString());
         System.out.println("--- Checking response status code.");
-        Allure.step("Checking response status code.");
+        Allure.step("Verify status-code is 200.");
         response.then().statusCode(200);
         System.out.println("--- Response code: " + response.getStatusCode());
     }

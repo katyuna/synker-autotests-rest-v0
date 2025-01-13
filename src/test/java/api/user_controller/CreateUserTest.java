@@ -34,7 +34,7 @@ public class CreateUserTest extends BaseTest {
                 .body(requestBody)
                 .when()
                 .post(baseURI + "/api/v1/user/admin");
-        Allure.step("Check status-code");
+        Allure.step("Verify status-code is 200");
         response.then().statusCode(200);
     }
 }
