@@ -1,5 +1,12 @@
 package data;
 
+import io.restassured.response.Response;
+
+import java.lang.constant.Constable;
+
+import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.given;
+
 public class TestDataGenerator {
 
     /**
@@ -7,6 +14,31 @@ public class TestDataGenerator {
      */
     public static Integer generateId() {
         return (int) System.currentTimeMillis();
+    }
+
+    /**
+     * Метод авторизации
+     * @param login
+     * @param password
+     * @return authCookie
+     */
+    public static String auth(String login, String password) {
+        String requestBody = "{ \"username\": \"" + login + "\", \"password\": \"" + password + "\" }";
+        Response response = given()
+                .header("Content-Type", "application/json")
+                .body(requestBody) // Передаем тело запроса
+                .when()
+                .post(baseURI + "/api/v1/auth/login");
+
+        if (response.statusCode() != 200) {
+            throw new RuntimeException("Authorization failed with status code: " + response.statusCode());
+        }
+
+        String authCookie = response.getCookie("JSESSIONID"); // Укажите имя cookie из ответа
+        if (authCookie == null) {
+            throw new RuntimeException("No auth cookie found in the response!");
+        }
+        return authCookie;
     }
 
     /* создапть пользователя
