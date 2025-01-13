@@ -30,10 +30,11 @@ public class CreateUserTest extends BaseTest {
         Allure.step("Send request");
         Response response = given()
                 .header("Content-Type", "application/json")
+                .header("Cookie", "JSESSIONID=" + authCookie)
                 .body(requestBody)
                 .when()
                 .post(baseURI + "/api/v1/user/admin");
         Allure.step("Check status-code");
-        response.then().statusCode(400);
+        response.then().statusCode(200);
     }
 }
