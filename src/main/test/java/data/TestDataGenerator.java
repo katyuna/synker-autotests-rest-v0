@@ -2,6 +2,13 @@ package data;
 
 public class TestDataGenerator {
 
+    /**
+     * Генерация уникального id на основе текущего времени - возвращает текущие миллисекунды
+     */
+    public static Integer generateId() {
+        return (int) System.currentTimeMillis();
+    }
+
     /* создапть пользователя
     Получить куки
     где-то их хранить, чтобю доступ ьыл всем
@@ -11,16 +18,6 @@ public class TestDataGenerator {
     - создать юзер 1 и юзер 2
 
     и тд и тп
-
-
-
-
     */
-
-
-
-
-
-
 
 }
