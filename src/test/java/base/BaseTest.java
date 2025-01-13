@@ -17,6 +17,7 @@ public class BaseTest {
         /**
          * Authorization
          */
+        System.out.println("--- Starting authorization from BaseTest class.");
         authCookie = TestDataGenerator.auth("test", "test");
         System.out.println("--- Authorization completed. Cookie = " + authCookie);
 
