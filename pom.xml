@@ -28,6 +28,15 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
+        <!-- JUnit Platform Suite -->
+        <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-suite-api -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
+            <version>1.11.4</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <!-- RestAssured -->
         <dependency>

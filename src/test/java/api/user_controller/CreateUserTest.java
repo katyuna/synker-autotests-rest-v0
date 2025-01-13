@@ -27,7 +27,7 @@ public class CreateUserTest extends BaseTest {
 
     public void createUserWithRoleAdmin() {
 
-        Allure.step("Send request");
+        Allure.step("Send create user request");
         Response response = given()
                 .header("Content-Type", "application/json")
                 .header("Cookie", "JSESSIONID=" + authCookie)
