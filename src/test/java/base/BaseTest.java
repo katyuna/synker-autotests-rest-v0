@@ -9,16 +9,14 @@ public class BaseTest {
 
     @BeforeAll
     public static void setUp() {
+        if (authCookie == null) {
+            RestAssured.baseURI = "http://sync-ui-dev.softwarecats.pro:8536";
 
-        /**
-         * Set Base URL
-         */
-         RestAssured.baseURI = "http://sync-ui-dev.softwarecats.pro:8536";
-        /**
-         * Authorization
-         */
-        System.out.println("--- Starting authorization from BaseTest class.");
-        authCookie = TestDataGenerator.auth("test", "test");
-        System.out.println("--- Authorization completed. Cookie = " + authCookie);
+            System.out.println("--- Starting authorization from BaseTest class.");
+            authCookie = TestDataGenerator.auth("test", "test");
+            System.out.println("--- Authorization completed. Cookie = " + authCookie);
+        } else {
+            System.out.println("--- Authorization already performed. Cookie = " + authCookie);
+        }
     }
 }

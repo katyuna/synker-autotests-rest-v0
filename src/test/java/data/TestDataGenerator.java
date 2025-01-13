@@ -34,7 +34,7 @@ public class TestDataGenerator {
             throw new RuntimeException("Authorization failed with status code: " + response.statusCode());
         }
 
-        String authCookie = response.getCookie("JSESSIONID"); // Укажите имя cookie из ответа
+        String authCookie = response.getCookie("JSESSIONID");
         if (authCookie == null) {
             throw new RuntimeException("No auth cookie found in the response!");
         }
