@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>petproject</groupId>
-    <artifactId>sample-project</artifactId>
+    <groupId>syncer</groupId>
+    <artifactId>syncer-project</artifactId>
     <version>1.0</version>
 
     <properties>
@@ -26,6 +26,14 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUnit Platform Suite -->
+        <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-suite-api -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
+            <version>1.11.4</version>
             <scope>test</scope>
         </dependency>
 
@@ -68,6 +76,7 @@
                 <version>3.1.2</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore> <!-- Игнорировать сбои тестов и продолжать сборку -->
+                    <skipTests>false</skipTests>
                     <includes>
                         <include>**/*.java</include>
                     </includes>
