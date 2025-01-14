@@ -1,8 +1,11 @@
 package data;
 
+import io.qameta.allure.Allure;
 import io.restassured.response.Response;
 
 import java.lang.constant.Constable;
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
@@ -18,6 +21,7 @@ public class TestDataGenerator {
 
     /**
      * Метод авторизации
+     *
      * @param login
      * @param password
      * @return authCookie
@@ -30,16 +34,19 @@ public class TestDataGenerator {
                 .when()
                 .post(baseURI + "/api/v1/auth/login");
 
+        String authCookie = response.getCookie("JSESSIONID");
+
         if (response.statusCode() != 200) {
             throw new RuntimeException("Authorization failed with status code: " + response.statusCode());
         }
 
-        String authCookie = response.getCookie("JSESSIONID");
-        if (authCookie == null) {
+       if (authCookie == null) {
             throw new RuntimeException("No auth cookie found in the response!");
         }
         return authCookie;
     }
+
+}
 
     /* создапть пользователя
     Получить куки
@@ -52,4 +59,4 @@ public class TestDataGenerator {
     и тд и тп
     */
 
-}
+

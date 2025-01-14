@@ -20,9 +20,9 @@ public class GetUserListTest extends BaseTest {
     @Test
     @Tag("positive")
     @Order(1)
-    @DisplayName("Get user list")
-    @Description("Get user list")
-    public void getUserList(){
+    @DisplayName("Get user list correctly")
+    @Description("Get user list with 10 users per page, page number in pagination is 0")
+    public void getUserListSuccessfully(){
         int size = 10; // User amount per page
         int page = 0;  // Page number
         System.out.println("--- Start test: Get user list with parameters: size = " + size +", page = " + page+".");
@@ -41,5 +41,41 @@ public class GetUserListTest extends BaseTest {
         Allure.step("Verify status-code is 200.");
         response.then().statusCode(200);
         System.out.println("--- Response code: " + response.getStatusCode());
+        System.out.println("--- Checking response body.");
+        Allure.step("Verify that response body contains array of users.");
+
+        Allure.step("Verify that response body contains at least one users info.");
+
+
     }
+
+    @Test
+    @Tag("positive")
+    @Order(2)
+    @DisplayName("Get user list with no users per page")
+    @Description("Get empty array in response when no users on the page")
+    public void getEmptyArrayWhenNoUsersOnThePage(){
+
+    }
+
+    @Test
+    @Tag("negative")
+    @Order(3)
+    @DisplayName("Get 500 with user list request")
+    @Description("Get 500 with user list request when URL is wrong")
+    public void getInternalServerErrorWithWrongUrl(){
+
+    }
+
+
+    @Test
+    @Tag("negative")
+    @Order(4)
+    @DisplayName("Get 400 with wrong request")
+    @Description("Get 400 when request body is wrong")
+    public void getBadRequestErrorWithWrongRequestBody(){
+
+    }
+
+
 }
