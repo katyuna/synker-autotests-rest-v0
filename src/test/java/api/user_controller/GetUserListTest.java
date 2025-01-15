@@ -23,6 +23,8 @@ import static org.hamcrest.Matchers.not;
 
 public class GetUserListTest extends BaseTest {
 
+    @Feature("Get user list")
+
     @ParameterizedTest
     @CsvSource({
             "0, 1",
