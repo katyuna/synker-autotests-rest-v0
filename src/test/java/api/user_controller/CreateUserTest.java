@@ -22,7 +22,7 @@ public class CreateUserTest extends BaseTest {
     @Test
     @Tag("positive")
     @Order(1)
-    @DisplayName("Create user ROLE_ADMIN")
+    @DisplayName("Create user with role ROLE_ADMIN")
     @Description("Create user with role ROLE_ADMIN")
 
     public void createUserWithRoleAdmin() {
