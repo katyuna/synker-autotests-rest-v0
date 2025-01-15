@@ -24,7 +24,7 @@ public class RestClient {
                 .get(endpoint);
     }
 
-    public Response post(String endpoint, Object body, Map<String, String> headers, String cookie) {
+    public Response post(String endpoint, Object body, String cookie) {
         return RestAssured.given()
                 .baseUri(baseUri)
                 .contentType(ContentType.JSON)

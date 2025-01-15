@@ -13,8 +13,8 @@ import utils.RestClient;
 import static io.restassured.RestAssured.given;
 
 public class CreateUserMappingListTest extends BaseTest {
+
     private final RestClient restClient = new RestClient(RestAssured.baseURI);
-    private static String sessionCookie;
 
     @Feature("Create mapping user")
     @Tag("positive")
@@ -31,7 +31,7 @@ public class CreateUserMappingListTest extends BaseTest {
         userMappingDto.setCreated("2024-12-18T08:20:51.797Z");
         userMappingDto.setCreatedBy("tester");
 
-        Response response = restClient.post("/api/v1/mapping/user", userMappingDto, null, authCookie);
+        Response response = restClient.post("/api/v1/mapping/user", userMappingDto, authCookie);
 
         response.then()
                 .statusCode(200)
