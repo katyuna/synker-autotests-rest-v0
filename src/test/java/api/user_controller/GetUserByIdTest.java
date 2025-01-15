@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
 public class GetUserByIdTest extends BaseTest {
 
     /**
-     * Тестовые данные: получить список id пользователей
+     * Get test data: list of user ids
      */
     public static List<Integer> getUsersIds() {
         int size = 10; // User amount per page
@@ -65,7 +65,7 @@ public class GetUserByIdTest extends BaseTest {
 
     @Test
     @Tag("negative")
-    @Order(1)
+    @Order(2)
     @DisplayName("Get users by Ids with not existing Id.")
     @Description("Get user by Id test with not existing Id. User id got from generator.")
     public void getUserByIdWithNotExistingId() {
