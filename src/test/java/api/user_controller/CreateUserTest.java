@@ -7,29 +7,34 @@ import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 public class CreateUserTest extends BaseTest {
-    @Feature("")
+
+    String requestBody = "";
+
+    @Feature("Create user")
 
     @Test
+    @Tag("positive")
     @Order(1)
-    @DisplayName("")
-    @Description("r")
+    @DisplayName("Create user ROLE_ADMIN")
+    @Description("Create user with role ROLE_ADMIN")
 
-    public void testCreateUser() {
+    public void createUserWithRoleAdmin() {
+
+        Allure.step("Send create user request");
         Response response = given()
                 .header("Content-Type", "application/json")
-                .body("")
+                .header("Cookie", "JSESSIONID=" + authCookie)
+                .body(requestBody)
                 .when()
-                .post(baseURI +"/user");
-        Allure.step("Check status-code");
+                .post(baseURI + "/api/v1/user/admin");
+        Allure.step("Verify status-code is 200");
         response.then().statusCode(200);
-
-
     }
-
 }
