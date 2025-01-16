@@ -64,7 +64,7 @@ public class GetUserByIdTest extends BaseTest {
         queryParams.put("size", String.valueOf(10));
         String endpoint = "/api/v1/user/" + id;
 
-        System.out.println("-> Start test: Sending GET-user-list request with id = " + id + ".");
+        System.out.println("-> Start test: Sending GET-user-by-id request with id = " + id + ".");
         Allure.step("Sending GET-user-by-id request with id = " + id + ".");
         Response response = restClient.get(endpoint, queryParams, authCookie);
         Allure.step("Verify status-code is 200.");
@@ -85,7 +85,7 @@ public class GetUserByIdTest extends BaseTest {
         Integer id = TestDataGenerator.generateId();
         String endpoint = "/api/v1/user/" + id;
 
-        System.out.println("-> Start test: Sending GET-user-list request with not existing id = " + id + ".");
+        System.out.println("-> Start test: Sending GET-user-by-id request with not existing id = " + id + ".");
         Allure.step("Sending GET-user-by-id request with not existing id = " + id + ".");
         Response response = restClient.getNoParams(endpoint, authCookie);
 

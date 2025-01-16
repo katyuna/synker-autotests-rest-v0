@@ -1,27 +1,18 @@
 package utils;
 
-import io.qameta.allure.internal.shadowed.jackson.core.JsonProcessingException;
-import io.qameta.allure.internal.shadowed.jackson.databind.JsonNode;
-import io.qameta.allure.internal.shadowed.jackson.databind.ObjectMapper;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
+import java.util.List;
+
 public class JsonClient {
-
-    /*  private static ObjectMapper objectMapper = new ObjectMapper();
-
-    public static JsonPath getJsonPath(Response response) {
+    public static List<?> getValuesListFromResponseByJsonPath(Response response, String path){
         JsonPath jsonPath = response.jsonPath();
-        return jsonPath;
+        List<String> valuesList = jsonPath.getList(path);
+        System.out.println("List of values" + valuesList);
+        return valuesList;
     }
 
- public static JsonNode makeJsonNodeTreeFromResponse (Response response) throws JsonProcessingException {
-     String jsonResponse = response.getBody().asString();
-     JsonNode rootNode = objectMapper.readTree(jsonResponse);
-     return rootNode;
- }
-
-     */
 
 
 }

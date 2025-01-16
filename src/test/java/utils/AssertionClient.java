@@ -2,10 +2,13 @@ package utils;
 
 import io.restassured.response.Response;
 
+import java.util.List;
+
 public class AssertionClient {
 
     /**
      * Checking response status code
+     *
      * @param response
      * @param expectedStatusCode
      */
@@ -23,6 +26,7 @@ public class AssertionClient {
 
     /**
      * Check response body is not null
+     *
      * @param response
      */
     public static void checkResponseBodyIsNotNull(Response response) {
@@ -34,6 +38,14 @@ public class AssertionClient {
             throw new AssertionError("Error: Response body is null.");
         }
     }
-}
 
+    public static void checkValuesListNotEmpty(List<?> list) {
+        System.out.println("--- Checking value list is not empty.");
+        if (list.size() > 0) {
+            System.out.println("Success: Value list is not empty.");
+        }else {
+            throw new AssertionError("Error: Response body is null.");
+        }
+    }
+}
 
