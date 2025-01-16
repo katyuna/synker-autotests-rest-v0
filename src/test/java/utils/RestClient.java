@@ -14,11 +14,37 @@ public class RestClient {
         this.baseUri = baseUri;
     }
 
-    public Response get(String endpoint, Map<String, Object> queryParams, String cookie) {
+    /**
+     *
+     * @param endpoint
+     * @param queryParams
+     * @param cookie
+     * @return
+     */
+    public Response get(String endpoint, Map<String, String> queryParams, String cookie) {
 
         return RestAssured.given()
                 .baseUri(baseUri)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .queryParams(queryParams)
+                .cookie("JSESSIONID", cookie)
+                .when()
+                .get(endpoint);
+    }
+
+    /**
+     *
+     * @param endpoint
+     * @param cookie
+     * @return
+     */
+    public Response getNoParams(String endpoint, String cookie) {
+
+        return RestAssured.given()
+                .baseUri(baseUri)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .cookie("JSESSIONID", cookie)
                 .when()
                 .get(endpoint);

@@ -79,7 +79,7 @@ public class GetUserByIdTest extends BaseTest {
                 .when()
                 .get(baseURI + "/api/v1/user/" + id);
         System.out.println("--- Checking response status code.");
-        Allure.step("Verify status-code is 200.");
+        Allure.step("Verify status-code is 400.");
         response.then().statusCode(400);
         System.out.println("--- Response code: " + response.getStatusCode());
     }

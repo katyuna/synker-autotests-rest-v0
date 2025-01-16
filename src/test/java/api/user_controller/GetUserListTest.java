@@ -4,6 +4,9 @@ import base.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
+import io.qameta.allure.internal.shadowed.jackson.core.JsonProcessingException;
+import io.qameta.allure.internal.shadowed.jackson.databind.JsonNode;
+import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +16,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import utils.AssertionClient;
+import utils.JsonClient;
+import utils.RestClient;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
@@ -22,12 +30,14 @@ import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.not;
 
 public class GetUserListTest extends BaseTest {
+    private final RestClient restClient = new RestClient(RestAssured.baseURI);
 
     @Feature("Get user list")
 
     @ParameterizedTest
     @CsvSource({
             "0, 1",
+            "01, 01",
             "0, 10",
             "0, 100",
             "1,10",
@@ -36,75 +46,70 @@ public class GetUserListTest extends BaseTest {
     })
     @Tag("positive")
     @Order(1)
-    @DisplayName("Get users by Ids correctly.")
-    @Description("Get user list with different size and page")
+    @DisplayName("Get user list with valid page and size parameters.")
+    @Description("Send GET request to fetch a user list with valid page and size parameters, and verify that the response is correct.")
     public void getUserListWithDifferentPageNumbersAndUsersPerPage(int page, int size){
-        System.out.println("-> Start test: Get user list with parameters: size = " + size +", page = " + page + ".");
-        Allure.step("Get user list with page = " + page + " and size = " + size + ".");
-        Allure.step("Sending get user list request.");
-        Response response = given()
-                .header("Content-Type", "application/json")
-                .header("Cookie", "JSESSIONID=" + authCookie)
-                .queryParam("size", size)
-                .queryParam("page", page)
-                .log().all()
-                .when()
-                .get(baseURI + "/api/v1/user");
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("page", String.valueOf(page));
+        queryParams.put("size", String.valueOf(size));
 
-        System.out.println("--- Response Body: " + response.getBody().asString());
-        System.out.println("--- Checking response status code.");
+        System.out.println("-> Sending GET-user-list request with page = " + page + " and size = " + size + ".");
+        Response response = restClient.get("/api/v1/user", queryParams, authCookie);
         Allure.step("Verify status-code is 200.");
-        response.then().statusCode(200);
-        System.out.println("--- Response code: " + response.getStatusCode());
-        System.out.println("--- Checking response body.");
-        Allure.step("Verify that response body not empty.");
-        response.then().assertThat().body(not(emptyOrNullString()));
+        AssertionClient.checkStatusCode(response, 200);
+        Allure.step("Verify that response body not null.");
+        AssertionClient.checkResponseBodyIsNotNull(response);
     }
 
     @Test
     @Tag("positive")
     @Order(2)
-    @DisplayName("Get user list without page and size parameters")
-    @Description("Get user list when no page and size pregames")
+    @DisplayName("Get user list without page and size parameters.")
+    @Description("Send GET request to fetch the user list without page and size parameters, and verify that the response is correct.")
     public void getUsersListWhenNoParametersInRequest(){
+        System.out.println("-> Sending GET-user-list request with no parameters.");
+        Response response = restClient.getNoParams("/api/v1/user", authCookie);
+        Allure.step("Verify status-code is 200.");
+        AssertionClient.checkStatusCode(response, 200);
+        Allure.step("Verify that response body not null.");
+        AssertionClient.checkResponseBodyIsNotNull(response);
+
 
     }
 
     @ParameterizedTest
     @CsvSource({
-            " , ",
             "-1, 1",
-            "1, -1",
-            "null, 1",
-            "1, null"
+            "1, -1"
     })
     @Tag("negative")
     @Order(3)
-    @DisplayName("Get user list with empty page and size parameters")
-    @Description("Get 500 when page and size parameters are empty, null or negative number")
+    @DisplayName("Get user list with not valid page and size parameters.")
+    @Description("Send GET request to fetch an error with code 500 when page and size parameters have negative values.")
     public void getErrorWhenEmptyParametersInRequest(int page, int size){
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("page", String.valueOf(page));
+        queryParams.put("size", String.valueOf(size));
 
-
+        System.out.println("-> Sending GET-user-list request with page = " + page + " and size = " + size + ".");
+        Response response = restClient.get("/api/v1/user", queryParams, authCookie);
+        Allure.step("Verify status-code is 500.");
+        AssertionClient.checkStatusCode(response, 500);
+        Allure.step("Verify that response body not null.");
+        AssertionClient.checkResponseBodyIsNotNull(response);
     }
 
     @Test
     @Tag("negative")
     @Order(4)
-    @DisplayName("Get 500 with user list request")
-    @Description("Get 500 with user list request when URL is wrong")
+    @DisplayName("Get user list with not valid URL")
+    @Description("Send GET request to fetch an error with code 500 when URL is incorrect.")
     public void getInternalServerErrorWithWrongUrl(){
-
+        System.out.println("-> Sending GET-user-list request with wrong URL.");
+        Response response = restClient.getNoParams("/api/v1/user123", authCookie);
+        Allure.step("Verify status-code is 500.");
+        AssertionClient.checkStatusCode(response, 500);
+        Allure.step("Verify that response body not null.");
+        AssertionClient.checkResponseBodyIsNotNull(response);
     }
-
-
-    @Test
-    @Tag("negative")
-    @Order(5)
-    @DisplayName("Get 400 with wrong request")
-    @Description("Get 400 when request body is wrong")
-    public void getBadRequestErrorWithWrongRequestBody(){
-
-    }
-
-
 }
