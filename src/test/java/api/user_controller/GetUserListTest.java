@@ -30,7 +30,6 @@ import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.not;
 
 public class GetUserListTest extends BaseTest {
-    private final RestClient restClient = new RestClient(RestAssured.baseURI);
 
     @Feature("Get user list")
 
@@ -53,7 +52,7 @@ public class GetUserListTest extends BaseTest {
         queryParams.put("page", String.valueOf(page));
         queryParams.put("size", String.valueOf(size));
 
-        System.out.println("-> Sending GET-user-list request with page = " + page + " and size = " + size + ".");
+        System.out.println("-> Start test: Sending GET-user-list request with page = " + page + " and size = " + size + ".");
         Response response = restClient.get("/api/v1/user", queryParams, authCookie);
         Allure.step("Verify status-code is 200.");
         AssertionClient.checkStatusCode(response, 200);
@@ -67,14 +66,12 @@ public class GetUserListTest extends BaseTest {
     @DisplayName("Get user list without page and size parameters.")
     @Description("Send GET request to fetch the user list without page and size parameters, and verify that the response is correct.")
     public void getUsersListWhenNoParametersInRequest(){
-        System.out.println("-> Sending GET-user-list request with no parameters.");
+        System.out.println("-> Start test: Sending GET-user-list request with no parameters.");
         Response response = restClient.getNoParams("/api/v1/user", authCookie);
         Allure.step("Verify status-code is 200.");
         AssertionClient.checkStatusCode(response, 200);
         Allure.step("Verify that response body not null.");
         AssertionClient.checkResponseBodyIsNotNull(response);
-
-
     }
 
     @ParameterizedTest
@@ -91,7 +88,7 @@ public class GetUserListTest extends BaseTest {
         queryParams.put("page", String.valueOf(page));
         queryParams.put("size", String.valueOf(size));
 
-        System.out.println("-> Sending GET-user-list request with page = " + page + " and size = " + size + ".");
+        System.out.println("-> Start test: Sending GET-user-list request with page = " + page + " and size = " + size + ".");
         Response response = restClient.get("/api/v1/user", queryParams, authCookie);
         Allure.step("Verify status-code is 500.");
         AssertionClient.checkStatusCode(response, 500);
@@ -105,7 +102,7 @@ public class GetUserListTest extends BaseTest {
     @DisplayName("Get user list with not valid URL")
     @Description("Send GET request to fetch an error with code 500 when URL is incorrect.")
     public void getInternalServerErrorWithWrongUrl(){
-        System.out.println("-> Sending GET-user-list request with wrong URL.");
+        System.out.println("-> Start test: Sending GET-user-list request with wrong URL.");
         Response response = restClient.getNoParams("/api/v1/user123", authCookie);
         Allure.step("Verify status-code is 500.");
         AssertionClient.checkStatusCode(response, 500);

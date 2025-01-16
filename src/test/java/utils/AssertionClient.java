@@ -2,8 +2,6 @@ package utils;
 
 import io.restassured.response.Response;
 
-import static org.hamcrest.Matchers.not;
-
 public class AssertionClient {
 
     /**
@@ -36,10 +34,6 @@ public class AssertionClient {
             throw new AssertionError("Error: Response body is null.");
         }
     }
-
-    //
-
-
 }
 
 

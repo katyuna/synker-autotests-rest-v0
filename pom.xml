@@ -48,7 +48,6 @@
             <artifactId>rest-assured</artifactId>
             <version>5.5.0</version>
         </dependency>
-
         <!-- Gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -61,7 +60,6 @@
             <artifactId>json-path</artifactId>
             <version>2.6.0</version>
         </dependency>
-
         <!-- Allure -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
