@@ -53,21 +53,6 @@ public class DataBaseClient {
         }
     }
 
-    /**
-     * Method to close the SSH and database connection.
-     */
-    public static void closeConnection() {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
-            if (session != null && session.isConnected()) {
-                session.disconnect();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error while closing the connection: " + e.getMessage());
-        }
-    }
 
     /**
      * Execute SQL query method
@@ -86,6 +71,24 @@ public class DataBaseClient {
         } catch (SQLException e) {
             System.err.println("SQL query execution error: " + e.getMessage());
             throw e;
+        }
+    }
+
+    /**
+     * Method to close the SSH and database connection.
+     */
+    public static void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                System.out.println("Close connection with Data Base");
+            }
+            if (session != null && session.isConnected()) {
+                session.disconnect();
+                System.out.println("->Disconnected from SSH");
+            }
+        } catch (SQLException e) {
+            System.err.println("->Error while closing the connection: " + e.getMessage());
         }
     }
 }
