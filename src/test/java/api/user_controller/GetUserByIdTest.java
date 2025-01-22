@@ -94,4 +94,26 @@ public class GetUserByIdTest extends BaseTest {
         Allure.step("Verify that response body not null.");
         AssertionClient.checkResponseBodyIsNotNull(response);
     }
+
+    /**
+     * Test method
+     */
+    @Test
+    @Tag("negative")
+    @Order(3)
+    @DisplayName("Get users by Ids with not valid Id.")
+    @Description("Get user by Id test with not existing Id. User id got from generator.")
+    public void getUserByIdWithNotValidId() {
+        Integer id = -1;
+        String endpoint = "/api/v1/user/" + id;
+
+        System.out.println("-> Start test: Sending GET-user-by-id request with not valid id = " + id + ".");
+        Allure.step("Sending GET-user-by-id request with not valid id = " + id + ".");
+        Response response = restClient.getNoParams(endpoint, authCookie);
+
+        Allure.step("Verify status-code is 400.");
+        AssertionClient.checkStatusCode(response, 400);
+        Allure.step("Verify that response body not null.");
+        AssertionClient.checkResponseBodyIsNotNull(response);
+    }
 }

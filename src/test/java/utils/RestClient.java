@@ -50,6 +50,16 @@ public class RestClient {
                 .get(endpoint);
     }
 
+    public Response getNoCookie(String endpoint) {
+
+        return RestAssured.given()
+                .baseUri(baseUri)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get(endpoint);
+    }
+
     public Response post(String endpoint, Object body, String cookie) {
         return RestAssured.given()
                 .baseUri(baseUri)
@@ -74,8 +84,11 @@ public class RestClient {
 
     public Response delete(String endpoint, String cookie) {
         return RestAssured.given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .baseUri(baseUri)
                 .cookie("JSESSIONID", cookie)
+                .log().all()
                 .when()
                 .delete(endpoint);
     }
