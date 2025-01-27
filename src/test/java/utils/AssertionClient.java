@@ -4,8 +4,9 @@ import io.restassured.response.Response;
 
 import java.util.List;
 
-public class AssertionClient {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+public class AssertionClient {
     /**
      * Checking response status code
      *
@@ -23,7 +24,6 @@ public class AssertionClient {
             throw new AssertionError("Error: Expected status code: " + expectedStatusCode + ", but got: " + statusCode);
         }
     }
-
     /**
      * Check response body is not null
      *
@@ -38,7 +38,10 @@ public class AssertionClient {
             throw new AssertionError("Error: Response body is null.");
         }
     }
-
+    /**
+     *
+     * @param list
+     */
     public static void checkValuesListNotEmpty(List<?> list) {
         System.out.println("--- Checking value list is not empty.");
         if (list.size() > 0) {
@@ -47,5 +50,6 @@ public class AssertionClient {
             throw new AssertionError("Error: Response body is null.");
         }
     }
+
 }
 

@@ -2,10 +2,14 @@ package base;
 
 import data.TestDataGenerator;
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
+import utils.DataBaseClient;
 import utils.RestClient;
+
+import java.sql.SQLException;
 
 @Suite
 @SelectPackages("api")
@@ -14,7 +18,7 @@ public class BaseTest {
     public final RestClient restClient = new RestClient(RestAssured.baseURI);
 
     @BeforeAll
-    public static void setUp() {
+    public static void setUp() throws SQLException {
         if (authCookie == null) {
             RestAssured.baseURI = "http://sync-ui-dev.softwarecats.pro:8536";
 
@@ -24,5 +28,14 @@ public class BaseTest {
         } else {
             System.out.println("--- Authorization already performed. Cookie = " + authCookie);
         }
+
+        System.out.println("-> Establish DataBase connection.");
+        DataBaseClient.establishConnection();
     }
+
+    @AfterAll
+    public static void disconnectFromDataBase() {
+        DataBaseClient.closeConnection();
+    }
+
 }

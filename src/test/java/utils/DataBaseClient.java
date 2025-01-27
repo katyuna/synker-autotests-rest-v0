@@ -3,10 +3,11 @@ package utils;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DataBaseClient {
 
@@ -55,12 +56,12 @@ public class DataBaseClient {
 
 
     /**
-     * Execute SQL query method
+     * Execute DML (INSERT, UPDATE, DELETE) SQL query method
      *
      * @param sqlQuery SQL query to be executed
      * @throws SQLException
      */
-    public static void executeQuery(String sqlQuery) throws SQLException {
+    public static void executeDMLQuery(String sqlQuery) throws SQLException {
         if (connection == null || connection.isClosed()) {
             throw new SQLException("Connection is not established.");
         }
@@ -72,6 +73,32 @@ public class DataBaseClient {
             System.err.println("SQL query execution error: " + e.getMessage());
             throw e;
         }
+    }
+
+    /**
+     * Execute DQL (SELECT) SQL query method
+     * @param sqlQuery
+     * @throws SQLException
+     */
+    public static List<Map<String, Object>> executeDQLQuery (String sqlQuery) throws SQLException {
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sqlQuery)) {
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            while (resultSet.next()) {
+                Map<String, Object> rowMap = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    Object columnValue = resultSet.getObject(i);
+                    rowMap.put(columnName, columnValue);
+                }
+                resultList.add(rowMap);
+            }
+        }
+        return resultList;
     }
 
     /**

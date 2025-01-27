@@ -26,6 +26,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.not;
 
@@ -93,7 +94,7 @@ public class GetUserListTest extends BaseTest {
     @Tag("positive")
     @Order(3)
     @DisplayName("Get user list without page and size parameters.")
-    @Description("Send GET request to fetch the user list without page and size parameters, and verify that the response is correct.")
+    @Description("Send GET request to fetch the user list without page and size parameters, and verify that the response is not empty.")
     public void getUsersListWhenNoParametersInRequest(){
         System.out.println("-> Start test: Sending GET-user-list request with no parameters.");
         Response response = restClient.getNoParams("/api/v1/user", authCookie);
@@ -111,7 +112,7 @@ public class GetUserListTest extends BaseTest {
     @Tag("negative")
     @Order(4)
     @DisplayName("Get user list with not valid page and size parameters.")
-    @Description("Send GET request to fetch an error with code 500 when page and size parameters have negative values.")
+    @Description("Send GET request to fetch an error with code 500 when page and/or size parameters have negative values.")
     public void getErrorWhenEmptyParametersInRequest(int page, int size){
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("page", String.valueOf(page));
@@ -123,6 +124,9 @@ public class GetUserListTest extends BaseTest {
         AssertionClient.checkStatusCode(response, 500);
         Allure.step("Verify that response body not null.");
         AssertionClient.checkResponseBodyIsNotNull(response);
+        Allure.step("Verify that response contain message.");
+        String error = response.jsonPath().getString("error");
+        assertThat("Message field is absent or empty.", error, not(emptyOrNullString()));
     }
 
     @Test

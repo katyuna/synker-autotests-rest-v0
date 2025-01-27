@@ -25,32 +25,20 @@ public class DeleteUserTest extends BaseTest {
             "VALUES(" + userId + ", '" + password + "', '" + userName + "'); ";
     String insertRoleQuery = "INSERT INTO public.t_user_t_role (t_user_id, roles_id) VALUES(" + userId + ", " + roleId + ");";
 
-    @BeforeEach
-    public void dataBaseConnection() throws SQLException {
-        System.out.println("-> Establish DataBase connection.");
-        DataBaseClient.establishConnection();
-    }
-
-    @AfterEach
-    public void disconnectFromDataBase() {
-        DataBaseClient.closeConnection();
-    }
-
     /**
      *
      */
     @Test
     @Tag("positive")
     @DisplayName("Delete user with existing Id.")
-    @Description("Delete user by Id test with existing Id. User id got manually.")
+    @Description("Delete user by Id test with existing Id. User id got new created from Data Base request.")
     public void deleteUserByIdWithExistingId() throws SQLException {
         System.out.println("-> Add User in to Data Base with id = " + userId + ".");
-        DataBaseClient.executeQuery(insertUserQuery);
+        DataBaseClient.executeDMLQuery(insertUserQuery);
         System.out.println("-> Add UserRoleId = " + roleId + " in to Data Base.");
-        DataBaseClient.executeQuery(insertRoleQuery);
+        DataBaseClient.executeDMLQuery(insertRoleQuery);
 
         String endpoint = "/api/v1/user/admin/" + userId;
-        System.out.println(endpoint);
         System.out.println("-> Start test: Sending DELETE-user request with existing id = " + userId + ".");
         Allure.step("Sending DELETE-user request with existing id =" + userId + ".");
         Response response = restClient.delete(endpoint, authCookie);
@@ -60,5 +48,4 @@ public class DeleteUserTest extends BaseTest {
         Allure.step("Verify that response body not null.");
         AssertionClient.checkResponseBodyIsNotNull(response);
     }
-
 }

@@ -11,15 +11,21 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import utils.AssertionClient;
+import utils.DataBaseClient;
 import utils.JsonClient;
 import utils.RestClient;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyOrNullString;
+import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetUserByIdTest extends BaseTest {
 
@@ -58,7 +64,7 @@ public class GetUserByIdTest extends BaseTest {
     @Order(1)
     @DisplayName("Get users by Ids correctly.")
     @Description("Get user by Id parametrized test with existing Ids. User ids got from /api/v1/user.")
-    public void getUserByIdWithExistingIds(int id) {
+    public void getUserByIdWithExistingIds(int id) throws SQLException {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("page", String.valueOf(0));
         queryParams.put("size", String.valueOf(10));
@@ -71,6 +77,14 @@ public class GetUserByIdTest extends BaseTest {
         AssertionClient.checkStatusCode(response, 200);
         Allure.step("Verify that response body not null.");
         AssertionClient.checkResponseBodyIsNotNull(response);
+        Allure.step("Verify username with Data base.");
+        String expected = response.path("username");
+
+        List<Map<String, Object>> users = DataBaseClient.executeDQLQuery("select username from t_user where id= " + id + ";");
+        System.out.println("--- Verify username with Data Base");
+        String actual = (String) users.get(0).get("username");
+        assertEquals(expected, actual,
+                String.format("Strings are not equals! Expected: '%s', Actual: '%s'", expected, actual));
     }
 
     /**
@@ -93,6 +107,9 @@ public class GetUserByIdTest extends BaseTest {
         AssertionClient.checkStatusCode(response, 400);
         Allure.step("Verify that response body not null.");
         AssertionClient.checkResponseBodyIsNotNull(response);
+        Allure.step("Verify that response contain message.");
+        String error = response.jsonPath().getString("error");
+        assertThat("Message field is absent or empty.", error, not(emptyOrNullString()));
     }
 
     /**
