@@ -9,11 +9,13 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import utils.RestClient;
 
-import static io.restassured.RestAssured.given;
+import java.io.IOException;
 
 public class CreateUserMappingListTest extends BaseTest {
 
     private final RestClient restClient = new RestClient(RestAssured.baseURI);
+    private final TestDataBuilder testDataBuilder = new TestDataBuilder();
+
 
     @Feature("Create mapping user")
     @Tag("positive")
@@ -21,20 +23,54 @@ public class CreateUserMappingListTest extends BaseTest {
     @DisplayName("Create mapping user sourceUser and targetUser")
     @Description("Create mapping user sourceUser and targetUser")
     @Test
-    public void createMapping() {
-        UserMappingDto userMappingDto = new UserMappingDto();
-        userMappingDto.setId("0");
-        userMappingDto.setSourceUser("sourceUser");
-        userMappingDto.setTargetUser("targetUser");
-        userMappingDto.setComment("Test comment");
-        userMappingDto.setCreated("2024-12-18T08:20:51.797Z");
-        userMappingDto.setCreatedBy("tester");
-
-        Response response = restClient.post("/api/v1/mapping/user", userMappingDto, authCookie);
+    public void createMapping() throws IOException {
+        UserMappingDto userMapping =  testDataBuilder.createUserMapping("validMapping", authCookie);
+        Response response = restClient.post("/api/v1/mapping/user", userMapping, authCookie);
 
         response.then()
-                .statusCode(200)
-                .extract()
-                .response();
+                .log().all()
+                .statusCode(200);
+
+        String createdId = response.jsonPath().getString("id");
+        userMapping.setId(createdId);
+        System.out.println("Created ID: " + userMapping.getId());
+        UserMappingDto actualData = testDataBuilder.getMappingFromApi(createdId, authCookie);
+        assert actualData != null : "Данные из API отсутствуют";
+        assert userMapping.getSourceUser().equals(actualData.getSourceUser()) : "Поле sourceUser не совпадает";
+        assert userMapping.getTargetUser().equals(actualData.getTargetUser()) : "Поле targetUser не совпадает";
+        assert userMapping.getComment().equals(actualData.getComment()) : "Поле comment не совпадает";
+
+        testDataBuilder.deleteMapping(createdId,authCookie);
     }
+
+    @Feature("Create mapping user")
+    @Tag("negative")
+    @Order(2)
+    @DisplayName("Negative: Missing required fields")
+    @Test
+    @Description("Attempt to create a user mapping without required fields")
+    @Disabled
+    public void testCreateMappingWithMissingSourceUserFields() throws IOException {
+        String userMappingDto = testDataBuilder.loadTestData("missingSourceUserFieldsMapping");
+        Response response = restClient.post("/api/v1/mapping/user/", userMappingDto, authCookie);
+        response.then()
+                .log().all()
+                .statusCode(400);
+    }
+
+    @Feature("Create mapping user")
+    @Tag("negative")
+    @Order(3)
+    @DisplayName("Negative: Missing required fields")
+    @Test
+    @Description("Attempt to create a user mapping without required fields")
+    @Disabled
+    public void testCreateMappingWithMissingTargetUserFields() throws IOException {
+        String userMappingDto = testDataBuilder.loadTestData("missingTargetUserFieldsMapping");
+        Response response = restClient.post("/api/v1/mapping/user/", userMappingDto, authCookie);
+        response.then()
+                .log().all()
+                .statusCode(400);
+    }
+
 }
