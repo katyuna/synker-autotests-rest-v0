@@ -28,13 +28,14 @@ public class RestClient {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .queryParams(queryParams)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .cookie("JSESSIONID", cookie)
                 .when()
                 .get(endpoint);
     }
 
     /**
-     *
      * @param endpoint
      * @param cookie
      * @return
@@ -46,20 +47,34 @@ public class RestClient {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .cookie("JSESSIONID", cookie)
+                .log().all()
                 .when()
                 .get(endpoint);
     }
 
-    public Response getNoCookie(String endpoint) {
+    /**
+     * @param endpoint
+     * @param cookie
+     * @param contentType
+     * @return
+     */
+    public Response get(String endpoint, String cookie, String contentType) {
 
         return RestAssured.given()
                 .baseUri(baseUri)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
+                .header("Content-Type", contentType)
+                .cookie("JSESSIONID", cookie)
+                .log().all()
                 .when()
                 .get(endpoint);
     }
 
+    /**
+     * @param endpoint
+     * @param body
+     * @param cookie
+     * @return
+     */
     public Response post(String endpoint, Object body, String cookie) {
         return RestAssured.given()
                 .baseUri(baseUri)
@@ -67,6 +82,59 @@ public class RestClient {
                 .accept(ContentType.JSON)
                 .cookie("JSESSIONID", cookie)
                 .body(body)
+                .log().all()
+                .when()
+                .post(endpoint);
+    }
+
+    /**
+     * @param endpoint
+     * @param body
+     * @param cookie
+     * @param contentType
+     * @return
+     */
+    public Response post(String endpoint, Object body, String cookie, String contentType) {
+        return RestAssured.given()
+                .baseUri(baseUri)
+                .header("Content-Type", contentType)
+                .accept(ContentType.JSON)
+                .cookie("JSESSIONID", cookie)
+                .body(body)
+                .log().all()
+                .when()
+                .post(endpoint);
+    }
+
+    /**
+     * @param endpoint
+     * @param cookie
+     * @return
+     */
+    public Response postNoBody(String endpoint, String cookie) {
+        return RestAssured.given()
+                .baseUri(baseUri)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .cookie("JSESSIONID", cookie)
+                .log().all()
+                .when()
+                .post(endpoint);
+    }
+
+    /**
+     * @param endpoint
+     * @param cookie
+     * @param contentType
+     * @return
+     */
+    public Response postNoBody(String endpoint, String cookie, String contentType) {
+        return RestAssured.given()
+                .baseUri(baseUri)
+                .header("Content-Type", contentType)
+                .accept(ContentType.JSON)
+                .cookie("JSESSIONID", cookie)
+                .log().all()
                 .when()
                 .post(endpoint);
     }
@@ -87,6 +155,8 @@ public class RestClient {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .baseUri(baseUri)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .cookie("JSESSIONID", cookie)
                 .log().all()
                 .when()
