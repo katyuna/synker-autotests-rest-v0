@@ -1,7 +1,6 @@
 package api.user_controller;
 
-import base.BaseTest;
-import data.TestDataGenerator;
+import base.ApiBaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
@@ -12,8 +11,9 @@ import utils.AssertionClient;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
+@Tag("api")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CheckAuthTest extends BaseTest {
+public class CheckAuthTestApi extends ApiBaseTest {
 
     @Feature("Check Authorization")
 

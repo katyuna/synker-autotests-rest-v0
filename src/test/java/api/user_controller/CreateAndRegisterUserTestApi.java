@@ -1,6 +1,6 @@
 package api.user_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
@@ -10,7 +10,8 @@ import utils.AssertionClient;
 
 import static io.restassured.RestAssured.given;
 
-public class CreateAndRegisterUserTest extends BaseTest {
+@Tag("api")
+public class CreateAndRegisterUserTestApi extends ApiBaseTest {
 
     String requestBodyCreateUser = "";
 

@@ -1,6 +1,6 @@
 package api.sync_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import data.dto.SyncDto;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -21,7 +21,7 @@ import java.util.List;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
-public class DeleteSyncTaskTest extends BaseTest {
+public class DeleteSyncTaskTestApi extends ApiBaseTest {
 
     private final RestClient restClient = new RestClient(RestAssured.baseURI);
 

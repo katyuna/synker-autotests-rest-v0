@@ -1,13 +1,9 @@
 package api.user_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
-import io.qameta.allure.internal.shadowed.jackson.core.JsonProcessingException;
-import io.qameta.allure.internal.shadowed.jackson.databind.JsonNode;
-import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -15,22 +11,18 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 import utils.AssertionClient;
 import utils.JsonClient;
-import utils.RestClient;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.not;
 
-public class GetUserListTest extends BaseTest {
+public class GetUserListTestApi extends ApiBaseTest {
 
     @Feature("Get user list")
 
@@ -41,6 +33,7 @@ public class GetUserListTest extends BaseTest {
             "0, 10",
             "0, 100",
      })
+    @Tag("api")
     @Tag("positive")
     @Order(1)
     @DisplayName("Get user list with valid page and size parameters.")
@@ -67,13 +60,14 @@ public class GetUserListTest extends BaseTest {
         AssertionClient.checkValuesListNotEmpty(rolesNames);
     }
 
+    @Tag("api")
+    @Tag("positive")
     @ParameterizedTest
     @CsvSource({
             "1,10",
             "100, 10",
             "125, 3"
     })
-    @Tag("positive")
     @Order(2)
     @DisplayName("Pagination test.")
     @Description("Send GET request to fetch a user list pagination, and verify that the response not empty.")
@@ -91,6 +85,7 @@ public class GetUserListTest extends BaseTest {
     }
 
     @Test
+    @Tag("api")
     @Tag("positive")
     @Order(3)
     @DisplayName("Get user list without page and size parameters.")
@@ -109,6 +104,7 @@ public class GetUserListTest extends BaseTest {
             "-1, 1",
             "1, -1"
     })
+    @Tag("api")
     @Tag("negative")
     @Order(4)
     @DisplayName("Get user list with not valid page and size parameters.")
@@ -130,6 +126,7 @@ public class GetUserListTest extends BaseTest {
     }
 
     @Test
+    @Tag("api")
     @Tag("negative")
     @Order(5)
     @DisplayName("Get user list with not valid URL")

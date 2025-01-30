@@ -1,6 +1,6 @@
 package api.sync_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import data.TestDataGenerator;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -25,7 +25,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class GetSyncTaskByIdTest extends BaseTest {
+public class GetSyncTaskByIdTestApi extends ApiBaseTest {
 
     private static final int syncTaskId = getSyncTaskIds().get(0);
     private static final String taskName = getSyncTaskNames().get(0);

@@ -2,9 +2,6 @@ package data;
 
 import com.github.javafaker.Faker;
 import io.restassured.response.Response;
-import utils.DataBaseClient;
-
-import java.sql.SQLException;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;

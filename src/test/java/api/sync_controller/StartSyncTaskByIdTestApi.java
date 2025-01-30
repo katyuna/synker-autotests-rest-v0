@@ -1,6 +1,6 @@
 package api.sync_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import data.TestDataGenerator;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -24,7 +24,7 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class StartSyncTaskByIdTest extends BaseTest {
+public class StartSyncTaskByIdTestApi extends ApiBaseTest {
 
     private final String path = "/api/v1/sync/";
     private final RestClient restClient = new RestClient(RestAssured.baseURI);
