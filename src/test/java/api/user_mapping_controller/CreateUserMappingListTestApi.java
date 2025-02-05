@@ -1,6 +1,6 @@
 package api.user_mapping_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import data.dto.UserMappingDto;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
@@ -11,7 +11,7 @@ import utils.RestClient;
 
 import static io.restassured.RestAssured.given;
 
-public class CreateUserMappingListTest extends BaseTest {
+public class CreateUserMappingListTestApi extends ApiBaseTest {
 
     private final RestClient restClient = new RestClient(RestAssured.baseURI);
 

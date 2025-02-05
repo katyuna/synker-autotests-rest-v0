@@ -1,5 +1,6 @@
 package api.sync_controller;
 
+import base.ApiBaseTest;
 import base.BaseTest;
 import data.TestDataGenerator;
 import data.dto.SyncDto;
@@ -23,7 +24,7 @@ import static api.sync_controller.CreateNewSyncTaskTest.getTrackers;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
-public class DeleteSyncTaskTest extends BaseTest {
+public class DeleteSyncTaskTestApi extends ApiBaseTest {
 
     private final RestClient restClient = new RestClient(RestAssured.baseURI);
     private final String path = "/api/v1/sync/";

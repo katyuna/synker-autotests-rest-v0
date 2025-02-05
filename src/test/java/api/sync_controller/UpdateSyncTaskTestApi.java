@@ -1,7 +1,6 @@
 package api.sync_controller;
 
-import base.BaseTest;
-import data.TestDataGenerator;
+import base.ApiBaseTest;
 import data.dto.SyncDto;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -24,7 +23,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class UpdateSyncTaskTest extends BaseTest {
+public class UpdateSyncTaskTestApi extends ApiBaseTest {
 
     private final String path = "/api/v1/sync";
     private final RestClient restClient = new RestClient(RestAssured.baseURI);

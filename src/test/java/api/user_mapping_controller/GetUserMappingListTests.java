@@ -1,6 +1,6 @@
 package api.user_mapping_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @Disabled
-public class GetUserMappingListTests extends BaseTest {
+public class GetUserMappingListTests extends ApiBaseTest {
 
     @Feature("Get user mapping")
     @Tag("positive")

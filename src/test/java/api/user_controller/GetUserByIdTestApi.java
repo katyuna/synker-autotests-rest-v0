@@ -1,6 +1,6 @@
 package api.user_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import data.TestDataGenerator;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -12,8 +12,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import utils.AssertionClient;
 import utils.DataBaseClient;
-import utils.JsonClient;
-import utils.RestClient;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -27,7 +25,8 @@ import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GetUserByIdTest extends BaseTest {
+@Tag("api")
+public class GetUserByIdTestApi extends ApiBaseTest {
 
     /**
      * Get test data: list of user ids

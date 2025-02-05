@@ -1,6 +1,6 @@
 package api.sync_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
@@ -18,7 +18,7 @@ import utils.RestClient;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GetSyncTaskListTest extends BaseTest {
+public class GetSyncTaskListTestApi extends ApiBaseTest {
 
     private final String path = "/api/v1/sync";
     private final RestClient restClient = new RestClient(RestAssured.baseURI);
