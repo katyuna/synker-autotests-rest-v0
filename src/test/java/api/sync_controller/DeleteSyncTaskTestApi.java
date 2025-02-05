@@ -1,6 +1,8 @@
 package api.sync_controller;
 
+import base.ApiBaseTest;
 import base.BaseTest;
+import data.TestDataGenerator;
 import data.dto.SyncDto;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -18,12 +20,14 @@ import utils.RestClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import static api.sync_controller.CreateNewSyncTaskTest.getTrackers;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
-public class DeleteSyncTaskTest extends BaseTest {
+public class DeleteSyncTaskTestApi extends ApiBaseTest {
 
     private final RestClient restClient = new RestClient(RestAssured.baseURI);
+    private final String path = "/api/v1/sync/";
 
     /**
      * Get test data: get list of Automation sync task ids (created or updated automatically)
@@ -31,6 +35,21 @@ public class DeleteSyncTaskTest extends BaseTest {
     public static List<Integer> getAutomationSyncTaskIds() {
         int size = 100; // Sync task amount per page
         int page = 0;  // Page number
+
+        System.out.println("-> Creating Automation sync task");
+        SyncDto syncDto = new SyncDto();
+        syncDto.setId(TestDataGenerator.generateId());
+        syncDto.setSource(getTrackers().get(0));
+        syncDto.setDestination(getTrackers().get(1));
+        syncDto.setFilter("Automation");
+        syncDto.setComment("Automation");
+        syncDto.setSyncTime(false);
+        syncDto.setSyncComments(false);
+        syncDto.setAllowSync(false);
+        syncDto.setSyncPeriod("* 0 */3 * * *");
+        syncDto.setTaskName("Automation");
+
+        TestDataGenerator.createSyncTask(syncDto);
 
         System.out.println("-> Getting test parameters -> automatically created or updated " +
                 "sync task ids list with /api/v1/sync.");
@@ -74,8 +93,8 @@ public class DeleteSyncTaskTest extends BaseTest {
         System.out.println("--- Start test: Get 403 for delete sync task");
 
         Allure.step("Sending delete sync task request with wrong cookie.");
-        Response response = restClient.delete("/api/v1/sync/" + id,
-                "8C37CE51E75FFEFA9A29B71BEBA34072");
+        Response response = restClient.delete(path + id,
+"8C37CE51E75FFEFA9A29B71BEBA34072");
 
         System.out.println("--- Response Body: " + response.getBody().prettyPrint());
 
@@ -93,7 +112,7 @@ public class DeleteSyncTaskTest extends BaseTest {
         System.out.println("--- Start test: Delete sync task successfully");
 
         Allure.step("Sending delete sync task request.");
-        Response response = restClient.delete("/api/v1/sync/" + id, authCookie);
+        Response response = restClient.delete(path + id, authCookie);
 
         System.out.println("--- Response Body: " + response.getBody().prettyPrint());
 

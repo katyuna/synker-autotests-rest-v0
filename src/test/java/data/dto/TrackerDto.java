@@ -1,5 +1,6 @@
 package data.dto;
 
+import io.qameta.allure.internal.shadowed.jackson.annotation.JsonFormat;
 import io.qameta.allure.internal.shadowed.jackson.annotation.JsonIgnoreProperties;
 import io.qameta.allure.internal.shadowed.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class TrackerDto {
     private String trackerName;
 
     @JsonProperty(value = "created")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private String created;
 
     @JsonProperty(value = "type")

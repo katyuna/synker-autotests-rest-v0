@@ -1,6 +1,6 @@
 package api.user_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import data.TestDataGenerator;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -11,7 +11,8 @@ import utils.DataBaseClient;
 
 import java.sql.SQLException;
 
-public class DeleteUserTest extends BaseTest {
+@Tag("api")
+public class DeleteUserTestApi extends ApiBaseTest {
 
     /**
      * Test Data

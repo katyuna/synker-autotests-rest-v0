@@ -1,6 +1,6 @@
 package api.sync_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import data.TestDataGenerator;
 import data.dto.SyncDto;
 import data.dto.TrackerDto;
@@ -23,7 +23,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class CreateNewSyncTaskTest extends BaseTest {
+public class CreateNewSyncTaskTestApi extends ApiBaseTest {
 
     private final String path = "/api/v1/sync";
     private final RestClient restClient = new RestClient(RestAssured.baseURI);

@@ -1,6 +1,6 @@
 package api.sync_controller;
 
-import base.BaseTest;
+import base.ApiBaseTest;
 import data.TestDataGenerator;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -22,7 +22,7 @@ import java.util.List;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
-public class ValidateSyncTaskByIdTest extends BaseTest {
+public class ValidateSyncTaskByIdTestApi extends ApiBaseTest {
 
     private final String path = "/api/v1/sync/validate/";
 

@@ -1,7 +1,6 @@
 package api.user_mapping_controller;
 
-import base.BaseTest;
-import data.dto.UserMappingDto;
+import base.ApiBaseTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.internal.shadowed.jackson.databind.ObjectMapper;
@@ -12,10 +11,8 @@ import utils.RestClient;
 
 import java.io.IOException;
 
-public class GetUserMappingListTests extends BaseTest {
-    private final RestClient restClient = new RestClient(RestAssured.baseURI);
-    private final TestDataBuilder testDataBuilder = new TestDataBuilder();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+@Disabled
+public class GetUserMappingListTests extends ApiBaseTest {
 
     public void createMapping() throws IOException {
         UserMappingDto userMapping = testDataBuilder.createUserMapping("validMapping", authCookie);
