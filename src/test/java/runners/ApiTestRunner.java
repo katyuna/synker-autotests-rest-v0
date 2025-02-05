@@ -1,14 +1,17 @@
 package runners;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.platform.suite.api.*;
 
+/*
 @Suite
-@SelectPackages("api")  // Указывает, что тесты должны быть из пакета api
-@IncludeTags("api")  // Если нужен запуск по тегу
+@SelectPackages("api")  // Почему-то эта аннотация не работает совсем
+@IncludeTags("api")
+ */
+
+@Suite
+@SelectClasses({
+        api.user_controller.GetUserListTestApi.class,
+})
 public class ApiTestRunner {
-    @BeforeAll
-    public static void setUp() {
-        System.out.println("Running tests from ApiTestRunner...");
-    }
+
 }
