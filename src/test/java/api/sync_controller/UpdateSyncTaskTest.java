@@ -1,6 +1,7 @@
 package api.sync_controller;
 
 import base.BaseTest;
+import data.TestDataGenerator;
 import data.dto.SyncDto;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -17,6 +18,7 @@ import utils.RestClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import static api.sync_controller.CreateNewSyncTaskTest.getTrackers;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -33,6 +35,21 @@ public class UpdateSyncTaskTest extends BaseTest {
     public static List<SyncDto> getAutomationSyncTasks() {
         int size = 100; // Sync task amount per page
         int page = 0;  // Page number
+
+        System.out.println("-> Creating Automation sync task");
+        SyncDto syncDto = new SyncDto();
+        syncDto.setId(TestDataGenerator.generateId());
+        syncDto.setSource(getTrackers().get(0));
+        syncDto.setDestination(getTrackers().get(1));
+        syncDto.setFilter("Automation");
+        syncDto.setComment("Automation");
+        syncDto.setSyncTime(false);
+        syncDto.setSyncComments(false);
+        syncDto.setAllowSync(false);
+        syncDto.setSyncPeriod("* 0 */3 * * *");
+        syncDto.setTaskName("Automation");
+
+        TestDataGenerator.createSyncTask(syncDto);
 
         System.out.println("-> Getting test parameters -> automatically created " +
                 "sync task list with /api/v1/sync.");
@@ -95,7 +112,8 @@ public class UpdateSyncTaskTest extends BaseTest {
         Response finalResponse = restClient.getNoParams(path + "/" + updatedSyncTaskId, authCookie);
 
         System.out.println("--- Checking sync task by id " + updatedSyncTaskId + " updated successfully");
-        Allure.step("Verify taskName equals " + updated + ". Other fields are the same.");
+        Allure.step("Verify taskName and filter equals " + updated + ", syncComments is " + sync +
+                ". Other fields are the same.");
         assertAll(
                 () -> finalResponse.then().body("id", equalTo(updatedSyncTaskId)),
                 () -> finalResponse.then().body("taskName", equalTo(updated)),
