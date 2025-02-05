@@ -3,33 +3,50 @@ package api.user_mapping_controller;
 import base.ApiBaseTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
+import io.qameta.allure.internal.shadowed.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
+import utils.RestClient;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import java.io.IOException;
 
 @Disabled
 public class GetUserMappingListTests extends ApiBaseTest {
 
-    @Feature("Get user mapping")
-    @Tag("positive")
-    @Order(1)
-    @DisplayName("Get user mapping")
-    @Description("Test for retrieving user mapping")
-    @Test
-    public void getUserMapping() {
-        given()
-                .cookie("JSESSIONID", authCookie)
-                .queryParam("page", 1)
-                .queryParam("size", 100)
-                .queryParam("sort", "[\"id\"]")
-                .when()
-                .get(RestAssured.baseURI + "/api/v1" + "/mapping/user")
-                .then()
-                .statusCode(200)
-                .body("size()", equalTo(1));
+    public void createMapping() throws IOException {
+        UserMappingDto userMapping = testDataBuilder.createUserMapping("validMapping", authCookie);
+        Response response = restClient.post("/api/v1/mapping/user", userMapping, authCookie);
 
-        System.out.println("Successfully retrieved user mapping.");
+        response.then()
+                .log().all()
+                .statusCode(200);
+
+        String createdId = response.jsonPath().getString("id");
+        userMapping.setId(createdId);
+        System.out.println("Created ID: " + userMapping.getId());
+        UserMappingDto actualData = testDataBuilder.getMappingFromApi(createdId, authCookie);
+        assert actualData != null : "Данные из API отсутствуют";
+        assert userMapping.getSourceUser().equals(actualData.getSourceUser()) : "Поле sourceUser не совпадает";
+        assert userMapping.getTargetUser().equals(actualData.getTargetUser()) : "Поле targetUser не совпадает";
+        assert userMapping.getComment().equals(actualData.getComment()) : "Поле comment не совпадает";
+    }
+        @Feature("Get user mapping")
+        @Tag("positive")
+        @Order(1)
+        @DisplayName("Get user mapping by ID")
+        @Description("Test for retrieving user mapping by ID")
+        @Test
+        public void getUserMapping() throws IOException {
+
+            String createdId = testDataBuilder.create("validMapping", authCookie);
+
+            UserMappingDto retrievedData = testDataBuilder.getMappingFromApi(createdId, authCookie);
+
+            Assertions.assertNotNull(retrievedData, "Retrieved mapping should not be null!");
+            Assertions.assertEquals("sourceUser", retrievedData.getSourceUser(), "SourceUser does not match!");
+            Assertions.assertEquals("targetUser", retrievedData.getTargetUser(), "TargetUser does not match!");
+            Assertions.assertEquals("Test comment", retrievedData.getComment(), "Comment does not match!");
+        testDataBuilder.deleteMapping(createdId, authCookie);
     }
 }

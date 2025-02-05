@@ -1,0 +1,26 @@
+{
+  "validMapping": {
+    "id": "0",
+    "sourceUser": "sourceUser",
+    "targetUser": "targetUser",
+    "comment": "Test comment"
+  },
+  "missingSourceUserFieldsMapping": {
+    "targetUser": "targetUser",
+    "comment": "Test comment"
+  },
+  "missingTargetUserFieldsMapping": {
+    "sourceUser": "sourceUser",
+    "comment": "Test comment"
+  },
+  "validMappingDelete": {
+    "sourceUser": "sourceUser",
+    "targetUser": "targetUser",
+    "comment": "Test comment"
+  },
+  "validMappingUpdate": {
+    "sourceUser": "UpdatedSourceUser",
+    "targetUser": "UpdatedTargetUser",
+    "comment": "Updated comment"
+  }
+}

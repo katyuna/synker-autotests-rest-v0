@@ -13,9 +13,9 @@ public class DataBaseClient {
 
     // Параметры SSH-соединения
     private static final String SSH_HOST = "10.208.19.142";  // Хост SSH-сервера
-    private static final String SSH_USER = "ezarubina";    // Имя пользователя SSH
-    private static final String SSH_KEY_PATH = "D:/SoftWareCats/PROJECTS/SINKER/keys/priv.pem";
-    // Путь к приватному ключу
+    private static final String SSH_USER = "akolesnik";    // Имя пользователя SSH
+    private static final String SSH_KEY_PATH = "C:/Users/User/Desktop/ppk.ppk";
+    // Путь к приватному ключ
     private static final int SSH_PORT = 22;  // Порт SSH, обычно 22
 
     // Параметры подключения к базе данных
@@ -24,8 +24,8 @@ public class DataBaseClient {
     private static final String DB_PASSWORD = "changeme";
 
     // Локальный порт, на который будет проброшено соединение
-    private static final int LOCAL_PORT = 5432;
 
+    private static final int LOCAL_PORT = 5435;
     private static Session session;
     private static Connection connection;
 
