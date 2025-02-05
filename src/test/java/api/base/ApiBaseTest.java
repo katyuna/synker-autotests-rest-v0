@@ -9,8 +9,6 @@ import api.utils.RestClient;
 
 import java.sql.SQLException;
 
-//@Suite
-//@SelectPackages("api")
 public class ApiBaseTest {
     protected static String authCookie;
     public final RestClient restClient = new RestClient(RestAssured.baseURI);
