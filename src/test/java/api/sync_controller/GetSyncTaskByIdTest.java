@@ -103,18 +103,18 @@ public class GetSyncTaskByIdTest extends BaseTest {
     @Test
     @Tag("negative")
     @Order(2)
-    @DisplayName("Get 500 for Sync Task by id")
-    @Description("Get synchronization task by wrong id with status code 500")
+    @DisplayName("Get 400 for Sync Task by id")
+    @Description("Get synchronization task by wrong id with status code 400")
     public void verifyStatusCodeForWrongSyncTaskId() {
-        System.out.println("--- Start test: Get 500 for Sync Task by id");
+        System.out.println("--- Start test: Get 400 for Sync Task by id");
 
         Allure.step("Sending get sync task by wrong id request.");
-        Response response = restClient.getNoParams("/api/v1/sync/" + TestDataGenerator.generateId(), authCookie);
+        Response response = restClient.getNoParams(path + TestDataGenerator.generateId(), authCookie);
 
         System.out.println("--- Response Body: " + response.getBody().prettyPrint());
 
-        Allure.step("Verify status-code is 500.");
-        AssertionClient.checkStatusCode(response, 500);
+        Allure.step("Verify status-code is 400.");
+        AssertionClient.checkStatusCode(response, 400);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class GetSyncTaskByIdTest extends BaseTest {
         System.out.println("--- Start test: Verify id and taskName for Sync Task");
 
         Allure.step("Sending get sync task by id request.");
-        Response response = restClient.getNoParams("/api/v1/sync/" + syncTaskId, authCookie);
+        Response response = restClient.getNoParams(path + syncTaskId, authCookie);
 
         System.out.println("--- Response Body: " + response.getBody().prettyPrint());
 
@@ -147,7 +147,7 @@ public class GetSyncTaskByIdTest extends BaseTest {
         System.out.println("--- Start test: Get 403 with sync task by id request");
 
         Allure.step("Sending get sync task by id request with wrong cookie.");
-        Response response = restClient.getNoParams("/api/v1/sync/" + syncTaskId, "8C37CE51E75FFEFA9A29B71BEBA34072");
+        Response response = restClient.getNoParams(path + syncTaskId, "8C37CE51E75FFEFA9A29B71BEBA34072");
 
         System.out.println("--- Response Body: " + response.getBody().prettyPrint());
 
@@ -171,7 +171,7 @@ public class GetSyncTaskByIdTest extends BaseTest {
         System.out.println("--- Start test: Get sync task by id with unsupported content-type header");
 
         Allure.step("Sending get sync task by id request with unsupported content-type header.");
-        Response response = restClient.get("/api/v1/sync/" + syncTaskId, authCookie, contentType);
+        Response response = restClient.get(path + syncTaskId, authCookie, contentType);
 
         System.out.println("--- Response Body: " + response.getBody().prettyPrint());
 

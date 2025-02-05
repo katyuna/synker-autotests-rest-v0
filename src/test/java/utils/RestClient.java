@@ -31,6 +31,7 @@ public class RestClient {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .cookie("JSESSIONID", cookie)
+                .log().all()
                 .when()
                 .get(endpoint);
     }
@@ -146,6 +147,7 @@ public class RestClient {
                 .accept(ContentType.JSON)
                 .cookie("JSESSIONID", cookie)
                 .body(body)
+                .log().all()
                 .when()
                 .put(endpoint);
     }
