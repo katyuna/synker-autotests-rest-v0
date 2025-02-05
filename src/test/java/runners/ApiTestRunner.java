@@ -1,6 +1,8 @@
 package runners;
 
 import org.junit.platform.suite.api.*;
+import api.tests.sync_controller.*;
+import api.tests.user_controller.*;
 
 /*
 @Suite
@@ -10,7 +12,19 @@ import org.junit.platform.suite.api.*;
 
 @Suite
 @SelectClasses({
-        api.user_controller.GetUserListTestApi.class,
+        //User controller
+        GetUserListTestApi.class,
+        DeleteUserTestApi.class,
+        GetUserByIdTestApi.class,
+        GetUserListTestApi.class,
+        //Sync controller
+        DeleteSyncTaskTestApi.class,
+        UpdateSyncTaskTestApi.class,
+        GetSyncTaskByIdTestApi.class,
+        GetSyncTaskListTestApi.class,
+        CreateNewSyncTaskTestApi.class,
+        StartSyncTaskByIdTestApi.class,
+        ValidateSyncTaskByIdTestApi.class
 })
 public class ApiTestRunner {
 
