@@ -12,20 +12,19 @@ import java.util.Map;
 public class DataBaseClient {
 
     // Параметры SSH-соединения
-    private static final String SSH_HOST = "10.208.19.142";  // Хост SSH-сервера
-    private static final String SSH_USER = "ezarubina";    // Имя пользователя SSH
-    private static final String SSH_KEY_PATH = "D:\\SoftWareCats\\PROJECTS\\SINKER\\keys\\priv.pem";
-    // Путь к приватному ключ
-    private static final int SSH_PORT = 22;  // Порт SSH, обычно 22
+    private static final String SSH_HOST = System.getenv("SSH_HOST");
+    private static final String SSH_USER = System.getenv("SSH_USER");
+    private static final String SSH_KEY_PATH = System.getenv("SSH_KEY_PATH");
+    private static final int SSH_PORT = Integer.parseInt(System.getenv("SSH_PORT"));
 
     // Параметры подключения к базе данных
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/sync_db";
-    private static final String DB_USER = "sync";
-    private static final String DB_PASSWORD = "changeme";
+
+    private static final String DB_URL = System.getenv("DB_URL");
+    private static final String DB_USER = System.getenv("DB_USER");
+    private static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
 
     // Локальный порт, на который будет проброшено соединение
-
-    private static final int LOCAL_PORT = 5435;
+    private static final int LOCAL_PORT = Integer.parseInt(System.getenv("LOCAL_PORT"));
     private static Session session;
     private static Connection connection;
 
